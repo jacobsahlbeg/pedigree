@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: YOUR-USER/pedigree@v0.1.0   # pin to a commit SHA in production
+      - uses: jacobsahlbeg/pedigree@v0.1.0   # pin to a commit SHA in production
         with:
           fail-on: high
           comment: true
