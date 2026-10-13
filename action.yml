@@ -1,0 +1,65 @@
+name: 'Pedigree: dependency release check'
+description: 'Flags npm dependency upgrades whose release path does not match the package''s own history (provenance dropped, workflow or trigger swapped, commits off main, new install hooks).'
+author: 'Jacob'
+
+inputs:
+  lockfile:
+    description: 'Lockfile path(s), comma or newline separated, relative to the repo root. Default: auto-detect package-lock.json, npm-shrinkwrap.json, pnpm-lock.yaml, yarn.lock.'
+    required: false
+    default: ''
+  fail-on:
+    description: 'Fail the check at or above this severity: critical, high, medium, low, info, or none.'
+    required: false
+    default: 'high'
+  show:
+    description: 'Lowest severity to show in the summary and comment.'
+    required: false
+    default: 'low'
+  github-token:
+    description: 'Token for source-history checks (public repo reads) and the optional PR comment.'
+    required: false
+    default: ${{ github.token }}
+  comment:
+    description: 'Post or update a PR comment with the results (needs pull-requests: write).'
+    required: false
+    default: 'false'
+  inspect-tarballs:
+    description: 'Download and list package tarballs to detect binding.gyp and native binaries.'
+    required: false
+    default: 'true'
+  baseline-gap-hours:
+    description: 'A release must be at least this old to serve as the comparison baseline.'
+    required: false
+    default: '72'
+  max-packages:
+    description: 'Upper limit on new package versions checked per run.'
+    required: false
+    default: '200'
+  base-ref:
+    description: 'Commit to diff against. Default: the pull request base, or the push "before" commit.'
+    required: false
+    default: ''
+  config:
+    description: 'Path to the ignore file.'
+    required: false
+    default: '.github/pedigree.json'
+  registry-url:
+    description: 'npm registry to query.'
+    required: false
+    default: 'https://registry.npmjs.org'
+
+outputs:
+  max-severity:
+    description: 'Highest severity found across all checked packages.'
+  flagged-count:
+    description: 'Number of packages with at least one medium-or-higher finding.'
+  report-path:
+    description: 'Path to the full JSON report.'
+
+runs:
+  using: 'node24'
+  main: 'src/action.js'
+
+branding:
+  icon: 'git-commit'
+  color: 'orange'

@@ -1,0 +1,36 @@
+{
+  "name": "pedigree-check",
+  "version": "0.1.0",
+  "description": "Flags npm dependency upgrades whose release path does not match the package's own history: provenance dropped, workflow or trigger swapped, commits off the main branch, new install hooks.",
+  "type": "module",
+  "bin": {
+    "pedigree": "bin/pedigree.js"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\""
+  },
+  "keywords": [
+    "supply-chain",
+    "security",
+    "provenance",
+    "slsa",
+    "npm",
+    "github-action",
+    "dependabot"
+  ],
+  "license": "MIT"
+}
